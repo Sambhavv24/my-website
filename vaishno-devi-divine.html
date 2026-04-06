@@ -1,0 +1,975 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>माता वैष्णो देवी – दिव्य कथा</title>
+<link href="https://fonts.googleapis.com/css2?family=Tiro+Devanagari+Hindi:ital@0;1&family=Noto+Serif+Devanagari:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+* { margin:0; padding:0; box-sizing:border-box; -webkit-tap-highlight-color:transparent; }
+
+:root {
+  --gold: #f0c040;
+  --gold2: #c8922a;
+  --saffron: #e8651a;
+  --cream: #fdf3dc;
+  --parch: #f5e2b0;
+  --dark: #0d0600;
+  --ink: #1a0800;
+  --red: #8b1a1a;
+  --lotus: #d4607a;
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--dark);
+  font-family: 'Noto Serif Devanagari', serif;
+  color: var(--cream);
+  overflow-x: hidden;
+}
+
+/* ═══════════════════════════════
+   AUDIO TOGGLE
+═══════════════════════════════ */
+#audioBtn {
+  position: fixed;
+  top: 14px; right: 14px;
+  z-index: 9999;
+  background: rgba(240,192,64,0.18);
+  border: 1.5px solid var(--gold);
+  border-radius: 50%;
+  width: 46px; height: 46px;
+  font-size: 1.3rem;
+  cursor: pointer;
+  color: var(--gold);
+  backdrop-filter: blur(8px);
+  display: flex; align-items: center; justify-content: center;
+  transition: background 0.3s;
+}
+#audioBtn:hover { background: rgba(240,192,64,0.35); }
+
+/* progress dots */
+#progress {
+  position: fixed;
+  right: 10px; top: 50%;
+  transform: translateY(-50%);
+  z-index: 999;
+  display: flex; flex-direction: column; gap: 8px;
+}
+.pdot {
+  width: 7px; height: 7px;
+  border-radius: 50%;
+  background: rgba(240,192,64,0.3);
+  border: 1px solid rgba(240,192,64,0.5);
+  transition: all 0.4s;
+  cursor: pointer;
+}
+.pdot.active {
+  background: var(--gold);
+  box-shadow: 0 0 8px var(--gold);
+  transform: scale(1.4);
+}
+
+/* ═══════════════════════════════
+   CHAPTER PANELS
+═══════════════════════════════ */
+.panel {
+  position: relative;
+  width: 100vw;
+  min-height: 100svh;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  overflow: hidden;
+}
+
+/* Parallax BG */
+.panel-bg {
+  position: absolute;
+  inset: -15% 0;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  will-change: transform;
+  transition: filter 0.6s;
+}
+
+/* Gradient overlays per panel */
+.panel-overlay {
+  position: absolute; inset: 0;
+  background: linear-gradient(
+    to top,
+    rgba(13,6,0,0.97) 0%,
+    rgba(13,6,0,0.75) 35%,
+    rgba(13,6,0,0.3) 65%,
+    rgba(13,6,0,0.15) 100%
+  );
+}
+
+/* Ancient scroll texture overlay */
+.panel-texture {
+  position: absolute; inset: 0;
+  background-image:
+    repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 2px,
+      rgba(240,192,64,0.02) 2px,
+      rgba(240,192,64,0.02) 4px
+    );
+  pointer-events: none;
+}
+
+/* Gold border frame */
+.panel-frame {
+  position: absolute; inset: 0;
+  border: 2px solid transparent;
+  background: linear-gradient(var(--dark), var(--dark)) padding-box,
+              linear-gradient(135deg, rgba(240,192,64,0.4), transparent 40%, rgba(240,192,64,0.4)) border-box;
+  pointer-events: none;
+  z-index: 10;
+}
+
+/* ── Content box ── */
+.panel-content {
+  position: relative;
+  z-index: 5;
+  padding: 0 0 2.5rem 0;
+}
+
+/* Chapter number tag */
+.ch-tag {
+  display: inline-block;
+  background: linear-gradient(135deg, var(--gold2), var(--gold));
+  color: var(--ink);
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  padding: 0.28rem 0.9rem;
+  border-radius: 20px;
+  margin: 0 1.4rem 0.7rem;
+  text-transform: uppercase;
+  font-family: 'Noto Serif Devanagari', serif;
+}
+
+/* Icon */
+.ch-icon {
+  display: block;
+  font-size: 2.8rem;
+  text-align: center;
+  margin-bottom: 0.5rem;
+  filter: drop-shadow(0 0 12px rgba(240,192,64,0.6));
+  animation: iconPulse 3s ease-in-out infinite;
+}
+@keyframes iconPulse {
+  0%,100% { transform: scale(1); filter: drop-shadow(0 0 10px rgba(240,192,64,0.5)); }
+  50% { transform: scale(1.08); filter: drop-shadow(0 0 22px rgba(240,192,64,0.9)); }
+}
+
+/* Sanskrit border line */
+.mandala-line {
+  text-align: center;
+  color: var(--gold2);
+  font-size: 0.9rem;
+  letter-spacing: 0.2em;
+  opacity: 0.7;
+  margin: 0.3rem 0 0.8rem;
+}
+
+/* Title */
+.ch-title {
+  font-family: 'Tiro Devanagari Hindi', serif;
+  font-size: clamp(1.6rem, 5.5vw, 2.4rem);
+  color: var(--gold);
+  text-align: center;
+  line-height: 1.25;
+  padding: 0 1.2rem;
+  margin-bottom: 1rem;
+  text-shadow: 0 2px 20px rgba(0,0,0,0.9), 0 0 40px rgba(240,192,64,0.2);
+}
+
+/* Story text box — parchment scroll feel */
+.ch-scroll {
+  background: linear-gradient(
+    135deg,
+    rgba(30,12,2,0.92),
+    rgba(20,8,1,0.95)
+  );
+  border-top: 1px solid rgba(240,192,64,0.35);
+  border-bottom: 1px solid rgba(240,192,64,0.35);
+  margin: 0 1rem;
+  padding: 1.2rem 1.4rem;
+  border-radius: 12px;
+  position: relative;
+  box-shadow: 0 -20px 60px rgba(0,0,0,0.5), inset 0 0 40px rgba(240,192,64,0.03);
+}
+
+.ch-scroll::before, .ch-scroll::after {
+  content: '✦';
+  position: absolute;
+  color: var(--gold2);
+  font-size: 0.8rem;
+  opacity: 0.6;
+}
+.ch-scroll::before { top: 0.5rem; left: 0.8rem; }
+.ch-scroll::after  { bottom: 0.5rem; right: 0.8rem; }
+
+/* Animated story text */
+.story-text {
+  font-size: clamp(0.95rem, 2.8vw, 1.12rem);
+  line-height: 2;
+  color: var(--parch);
+  text-align: center;
+  min-height: 3em;
+}
+
+.story-text .word {
+  display: inline;
+  opacity: 0;
+  transition: opacity 0.25s ease;
+}
+.story-text .word.show { opacity: 1; }
+
+/* Quote block */
+.ch-quote {
+  margin-top: 0.9rem;
+  padding: 0.9rem 1rem;
+  border-left: 3px solid var(--saffron);
+  background: rgba(232,101,26,0.08);
+  border-radius: 0 8px 8px 0;
+  font-style: italic;
+  font-size: 0.92rem;
+  color: var(--cream);
+  line-height: 1.8;
+  text-align: left;
+}
+.ch-quote-attr {
+  display: block;
+  color: var(--gold);
+  font-size: 0.8rem;
+  margin-top: 0.4rem;
+  font-style: normal;
+}
+
+/* Scroll hint */
+.scroll-cue {
+  text-align: center;
+  margin-top: 1rem;
+  color: rgba(240,192,64,0.5);
+  font-size: 0.75rem;
+  letter-spacing: 0.12em;
+  animation: fadeUpDown 2s ease-in-out infinite;
+}
+@keyframes fadeUpDown {
+  0%,100% { opacity:0.4; transform:translateY(0); }
+  50%      { opacity:0.9; transform:translateY(5px); }
+}
+
+/* ═══════════════════════════════
+   HERO PANEL
+═══════════════════════════════ */
+#panel-hero {
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+.hero-om {
+  font-size: clamp(4rem, 15vw, 8rem);
+  color: var(--gold);
+  text-shadow: 0 0 60px rgba(240,192,64,0.7), 0 0 120px rgba(240,192,64,0.3);
+  animation: omGlow 4s ease-in-out infinite;
+  line-height: 1;
+  margin-bottom: 1rem;
+}
+@keyframes omGlow {
+  0%,100% { text-shadow: 0 0 40px rgba(240,192,64,0.6); transform: scale(1); }
+  50% { text-shadow: 0 0 80px rgba(240,192,64,1), 0 0 160px rgba(232,101,26,0.5); transform: scale(1.05); }
+}
+
+.hero-title {
+  font-family: 'Tiro Devanagari Hindi', serif;
+  font-size: clamp(2.2rem, 8vw, 5rem);
+  color: var(--gold);
+  line-height: 1.2;
+  text-shadow: 2px 4px 30px rgba(0,0,0,0.9);
+  margin-bottom: 0.6rem;
+}
+
+.hero-sub {
+  font-size: clamp(0.9rem, 2.5vw, 1.2rem);
+  color: var(--parch);
+  opacity: 0.8;
+  letter-spacing: 0.15em;
+  margin-bottom: 1.5rem;
+}
+
+.hero-lotuses {
+  font-size: 1.8rem;
+  margin-bottom: 2rem;
+  animation: lotusFloat 3s ease-in-out infinite;
+}
+@keyframes lotusFloat {
+  0%,100% { transform: translateY(0); }
+  50% { transform: translateY(-6px); }
+}
+
+.hero-start-btn {
+  background: linear-gradient(135deg, var(--gold2), var(--gold));
+  color: var(--ink);
+  border: none;
+  padding: 0.8rem 2.2rem;
+  border-radius: 30px;
+  font-size: 1rem;
+  font-family: 'Noto Serif Devanagari', serif;
+  font-weight: 700;
+  cursor: pointer;
+  box-shadow: 0 4px 20px rgba(240,192,64,0.4);
+  transition: transform 0.2s, box-shadow 0.2s;
+  letter-spacing: 0.05em;
+}
+.hero-start-btn:active { transform: scale(0.96); }
+
+/* ═══════════════════════════════
+   THREE PINDIS PANEL
+═══════════════════════════════ */
+.pindis-grid {
+  display: grid;
+  grid-template-columns: repeat(3,1fr);
+  gap: 0.8rem;
+  margin: 1rem 1rem 0;
+}
+.pindi-card {
+  background: rgba(30,12,2,0.8);
+  border: 1px solid rgba(240,192,64,0.3);
+  border-radius: 12px;
+  padding: 1rem 0.6rem;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+.pindi-card::before {
+  content: '';
+  position: absolute; inset: 0;
+  background: linear-gradient(135deg, rgba(240,192,64,0.05), transparent);
+}
+.pindi-glow {
+  font-size: 2.5rem;
+  display: block;
+  margin-bottom: 0.5rem;
+  filter: drop-shadow(0 0 15px currentColor);
+}
+.pindi-name {
+  font-family: 'Tiro Devanagari Hindi', serif;
+  font-size: 1rem;
+  color: var(--gold);
+  margin-bottom: 0.2rem;
+}
+.pindi-desc {
+  font-size: 0.72rem;
+  color: var(--parch);
+  opacity: 0.75;
+  line-height: 1.5;
+}
+
+/* ═══════════════════════════════
+   FINALE
+═══════════════════════════════ */
+#panel-finale {
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+.finale-jai {
+  font-family: 'Tiro Devanagari Hindi', serif;
+  font-size: clamp(2rem, 8vw, 4rem);
+  color: var(--gold);
+  text-shadow: 0 0 60px rgba(240,192,64,0.6);
+  animation: omGlow 3s ease-in-out infinite;
+  margin-bottom: 1.5rem;
+}
+.finale-msg {
+  font-size: clamp(0.9rem, 2.5vw, 1.1rem);
+  color: var(--parch);
+  opacity: 0.85;
+  line-height: 2;
+  padding: 0 2rem;
+  max-width: 400px;
+  margin: 0 auto 2rem;
+}
+.restart-btn {
+  background: transparent;
+  border: 1.5px solid var(--gold);
+  color: var(--gold);
+  padding: 0.7rem 2rem;
+  border-radius: 30px;
+  font-family: 'Noto Serif Devanagari', serif;
+  font-size: 0.9rem;
+  cursor: pointer;
+  letter-spacing: 0.08em;
+}
+
+/* ═══════════════════════════════
+   GOLD DIVIDER
+═══════════════════════════════ */
+.gold-strip {
+  height: 3px;
+  background: linear-gradient(to right, transparent, var(--gold2), var(--gold), var(--saffron), var(--gold), var(--gold2), transparent);
+}
+
+/* Particle container */
+#particles {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 1;
+  overflow: hidden;
+}
+.spark {
+  position: absolute;
+  width: 3px; height: 3px;
+  border-radius: 50%;
+  background: var(--gold);
+  opacity: 0;
+  animation: sparkFloat linear infinite;
+}
+@keyframes sparkFloat {
+  0%   { opacity:0; transform: translateY(0) scale(0.5); }
+  10%  { opacity: 0.8; }
+  90%  { opacity: 0.3; }
+  100% { opacity:0; transform: translateY(-100vh) scale(1.5); }
+}
+
+/* Loading screen */
+#loader {
+  position: fixed; inset: 0;
+  background: var(--dark);
+  z-index: 99999;
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  gap: 1rem;
+  transition: opacity 0.8s ease;
+}
+#loader.hide { opacity:0; pointer-events:none; }
+.loader-om {
+  font-size: 4rem;
+  color: var(--gold);
+  animation: omGlow 2s ease-in-out infinite;
+}
+.loader-bar {
+  width: 180px; height: 3px;
+  background: rgba(240,192,64,0.2);
+  border-radius: 2px;
+  overflow: hidden;
+}
+.loader-fill {
+  height: 100%;
+  background: linear-gradient(to right, var(--gold2), var(--gold));
+  border-radius: 2px;
+  animation: loadFill 2.5s ease forwards;
+}
+@keyframes loadFill {
+  from { width:0; }
+  to   { width:100%; }
+}
+.loader-text {
+  color: var(--gold2);
+  font-size: 0.85rem;
+  letter-spacing: 0.15em;
+  font-family: 'Tiro Devanagari Hindi', serif;
+}
+</style>
+</head>
+<body>
+
+<!-- LOADER -->
+<div id="loader">
+  <div class="loader-om">ॐ</div>
+  <div class="loader-bar"><div class="loader-fill"></div></div>
+  <div class="loader-text">दिव्य कथा लोड हो रही है...</div>
+</div>
+
+<!-- PARTICLES -->
+<div id="particles"></div>
+
+<!-- AUDIO TOGGLE -->
+<button id="audioBtn" title="संगीत">🔔</button>
+
+<!-- PROGRESS DOTS -->
+<div id="progress"></div>
+
+<!-- ════════════════════════════════════════
+     PANELS
+════════════════════════════════════════ -->
+
+<!-- HERO -->
+<section class="panel" id="panel-hero" data-index="0">
+  <div class="panel-bg" style="background-image:url('https://images.unsplash.com/photo-1588416936097-41850ab3d86d?w=1200&q=85'); background-position:center top;"></div>
+  <div class="panel-overlay"></div>
+  <div class="panel-texture"></div>
+  <div class="panel-frame"></div>
+  <div class="panel-content" style="text-align:center;padding-bottom:3rem;">
+    <div class="hero-om">ॐ</div>
+    <h1 class="hero-title">माता वैष्णो देवी</h1>
+    <p class="hero-sub">✦ पवित्र दिव्य कथा ✦</p>
+    <div class="hero-lotuses">🌺 🌸 🌺</div>
+    <p style="color:var(--parch);opacity:0.7;font-size:0.9rem;margin-bottom:1.5rem;letter-spacing:0.05em;">त्रिकुटा पर्वत की अमर गाथा</p>
+    <button class="hero-start-btn" onclick="scrollToPanel(1)">कथा आरंभ करें ▼</button>
+  </div>
+</section>
+
+<div class="gold-strip"></div>
+
+<!-- CHAPTER 1 — BIRTH -->
+<section class="panel" id="panel-1" data-index="1">
+  <div class="panel-bg" style="background-image:url('https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=1200&q=85'); background-position:center;"></div>
+  <div class="panel-overlay" style="background:linear-gradient(to top, rgba(13,6,0,0.97) 0%, rgba(13,6,0,0.6) 45%, rgba(13,6,0,0.2) 100%);"></div>
+  <div class="panel-texture"></div>
+  <div class="panel-frame"></div>
+  <div class="panel-content">
+    <span class="ch-tag">अध्याय १</span>
+    <span class="ch-icon">🌟</span>
+    <div class="mandala-line">✦ ॐ ✦ ॐ ✦ ॐ ✦</div>
+    <h2 class="ch-title">माता वैष्णो देवी का जन्म</h2>
+    <div class="ch-scroll">
+      <p class="story-text" data-text="बहुत समय पहले जब पृथ्वी पर अधर्म और बुराई बढ़ने लगी — तब माँ महाकाली, माँ महालक्ष्मी और माँ महासरस्वती ने अपनी दिव्य शक्तियों को एक साथ मिलाया। उनकी संयुक्त शक्ति से एक तेजस्वी कन्या का जन्म हुआ — जिन्हें माता वैष्णवी कहा गया।"></p>
+    </div>
+    <div class="scroll-cue">✦ नीचे स्क्रॉल करें ✦</div>
+  </div>
+</section>
+
+<div class="gold-strip"></div>
+
+<!-- CHAPTER 2 — RAMA -->
+<section class="panel" id="panel-2" data-index="2">
+  <div class="panel-bg" style="background-image:url('https://images.unsplash.com/photo-1505118380757-91f5f5632de0?w=1200&q=85'); background-position:center bottom;"></div>
+  <div class="panel-overlay" style="background:linear-gradient(to top, rgba(13,6,0,0.97) 0%, rgba(5,3,0,0.55) 50%, rgba(13,6,0,0.25) 100%);"></div>
+  <div class="panel-texture"></div>
+  <div class="panel-frame"></div>
+  <div class="panel-content">
+    <span class="ch-tag">अध्याय २</span>
+    <span class="ch-icon">🏹</span>
+    <div class="mandala-line">✦ श्री राम ✦</div>
+    <h2 class="ch-title">भगवान राम से मिलन</h2>
+    <div class="ch-scroll">
+      <p class="story-text" data-text="त्रेता युग में जब भगवान राम माता सीता की खोज में थे — माता वैष्णवी समुद्र किनारे तपस्या कर रही थीं। उन्होंने भगवान राम को पहचाना और उनसे विवाह की इच्छा प्रकट की।"></p>
+      <div class="ch-quote">
+        "इस अवतार में मैंने एक पत्नी व्रत लिया है — किंतु कलियुग में मैं कल्कि रूप में आकर तुम्हें स्वीकार करूंगा।"
+        <span class="ch-quote-attr">— भगवान श्री राम</span>
+      </div>
+    </div>
+    <div class="scroll-cue">✦ नीचे स्क्रॉल करें ✦</div>
+  </div>
+</section>
+
+<div class="gold-strip"></div>
+
+<!-- CHAPTER 3 — TRIKUTA -->
+<section class="panel" id="panel-3" data-index="3">
+  <div class="panel-bg" style="background-image:url('https://images.unsplash.com/photo-1486325212027-8081e485255e?w=1200&q=85'); background-position:center;"></div>
+  <div class="panel-overlay" style="background:linear-gradient(to top, rgba(13,6,0,0.97) 0%, rgba(13,6,0,0.5) 50%, rgba(0,0,0,0.2) 100%);"></div>
+  <div class="panel-texture"></div>
+  <div class="panel-frame"></div>
+  <div class="panel-content">
+    <span class="ch-tag">अध्याय ३</span>
+    <span class="ch-icon">🏔️</span>
+    <div class="mandala-line">✦ त्रिकुटा पर्वत ✦</div>
+    <h2 class="ch-title">त्रिकुटा पहाड़ों में तपस्या</h2>
+    <div class="ch-scroll">
+      <p class="story-text" data-text="भगवान राम की आज्ञा पाकर माता उत्तर भारत आईं। कटरा के त्रिकुटा पर्वत की दुर्गम चोटियों पर उन्होंने अपना निवास बनाया — और वहाँ कठोर तपस्या में लीन होकर अपने भक्तों को आशीर्वाद देना प्रारंभ किया।"></p>
+    </div>
+    <div class="scroll-cue">✦ नीचे स्क्रॉल करें ✦</div>
+  </div>
+</section>
+
+<div class="gold-strip"></div>
+
+<!-- CHAPTER 4 — BHANDARA -->
+<section class="panel" id="panel-4" data-index="4">
+  <div class="panel-bg" style="background-image:url('https://images.unsplash.com/photo-1604928141064-207cea6f571f?w=1200&q=85'); background-position:center;"></div>
+  <div class="panel-overlay" style="background:linear-gradient(to top, rgba(13,6,0,0.97) 0%, rgba(13,6,0,0.55) 45%, rgba(13,6,0,0.2) 100%);"></div>
+  <div class="panel-texture"></div>
+  <div class="panel-frame"></div>
+  <div class="panel-content">
+    <span class="ch-tag">अध्याय ४</span>
+    <span class="ch-icon">🪔</span>
+    <div class="mandala-line">✦ भक्त श्रीधर ✦</div>
+    <h2 class="ch-title">पंडित श्रीधर का भंडारा</h2>
+    <div class="ch-scroll">
+      <p class="story-text" data-text="हंसाली गाँव में पंडित श्रीधर — एक निर्धन किंतु परम भक्त ब्राह्मण — माता की आराधना करते थे। एक दिन माता स्वयं एक दिव्य कन्या के रूप में प्रकट हुईं और पूरे गाँव के लिए भंडारा रखने की आज्ञा दी। दरिद्र होते हुए भी पंडित जी ने पूर्ण श्रद्धा से माता की बात मानी।"></p>
+    </div>
+    <div class="scroll-cue">✦ नीचे स्क्रॉल करें ✦</div>
+  </div>
+</section>
+
+<div class="gold-strip"></div>
+
+<!-- CHAPTER 5 — BHAIRAVNATH -->
+<section class="panel" id="panel-5" data-index="5">
+  <div class="panel-bg" style="background-image:url('https://images.unsplash.com/photo-1448375240586-882707db888b?w=1200&q=85'); background-position:center;"></div>
+  <div class="panel-overlay" style="background:linear-gradient(to top, rgba(13,6,0,0.98) 0%, rgba(13,6,0,0.65) 45%, rgba(13,6,0,0.3) 100%);"></div>
+  <div class="panel-texture"></div>
+  <div class="panel-frame"></div>
+  <div class="panel-content">
+    <span class="ch-tag">अध्याय ५</span>
+    <span class="ch-icon">⚡</span>
+    <div class="mandala-line">✦ संकट ✦</div>
+    <h2 class="ch-title">भैरवनाथ का पीछा</h2>
+    <div class="ch-scroll">
+      <p class="story-text" data-text="भंडारे में भैरवनाथ नाम का एक दुष्ट साधक भी आया। उसने उस दिव्य कन्या को देखा — और समझ गया कि यह कोई साधारण बालिका नहीं है। वह माता की शक्ति को वश में करने की लालसा लेकर उनके पीछे लग गया।"></p>
+    </div>
+    <div class="scroll-cue">✦ नीचे स्क्रॉल करें ✦</div>
+  </div>
+</section>
+
+<div class="gold-strip"></div>
+
+<!-- CHAPTER 6 — BAN GANGA -->
+<section class="panel" id="panel-6" data-index="6">
+  <div class="panel-bg" style="background-image:url('https://images.unsplash.com/photo-1582719508461-905c673771fd?w=1200&q=85'); background-position:center;"></div>
+  <div class="panel-overlay" style="background:linear-gradient(to top, rgba(13,6,0,0.97) 0%, rgba(13,6,0,0.5) 50%, rgba(0,5,13,0.2) 100%);"></div>
+  <div class="panel-texture"></div>
+  <div class="panel-frame"></div>
+  <div class="panel-content">
+    <span class="ch-tag">अध्याय ६</span>
+    <span class="ch-icon">💧</span>
+    <div class="mandala-line">✦ पवित्र जलधारा ✦</div>
+    <h2 class="ch-title">बाणगंगा</h2>
+    <div class="ch-scroll">
+      <p class="story-text" data-text="पीछा करते हुए रास्ते में हनुमान जी को प्यास लगी। माता ने अपना दिव्य बाण उठाया — और पर्वत की चट्टान पर प्रहार किया। उसी क्षण पत्थर से एक पवित्र जलधारा फूट पड़ी। यह स्थान आज बाणगंगा के नाम से पूजा जाता है।"></p>
+    </div>
+    <div class="scroll-cue">✦ नीचे स्क्रॉल करें ✦</div>
+  </div>
+</section>
+
+<div class="gold-strip"></div>
+
+<!-- CHAPTER 7 — CHARAN PADUKA -->
+<section class="panel" id="panel-7" data-index="7">
+  <div class="panel-bg" style="background-image:url('https://images.unsplash.com/photo-1519681393784-d120267933ba?w=1200&q=85'); background-position:center;"></div>
+  <div class="panel-overlay" style="background:linear-gradient(to top, rgba(13,6,0,0.97) 0%, rgba(13,6,0,0.55) 50%, rgba(0,0,13,0.2) 100%);"></div>
+  <div class="panel-texture"></div>
+  <div class="panel-frame"></div>
+  <div class="panel-content">
+    <span class="ch-tag">अध्याय ७</span>
+    <span class="ch-icon">👣</span>
+    <div class="mandala-line">✦ दिव्य चरण-चिह्न ✦</div>
+    <h2 class="ch-title">चरण पादुका</h2>
+    <div class="ch-scroll">
+      <p class="story-text" data-text="माता ने पर्वत पथ पर रुककर पीछे देखा — क्या भैरवनाथ अभी भी पीछा कर रहा है? जहाँ उनके कोमल चरण पड़े — वहाँ पत्थर पर उनके पवित्र पाद-चिह्न सदा के लिए अंकित हो गए। यह पावन स्थल आज चरण पादुका कहलाता है।"></p>
+    </div>
+    <div class="scroll-cue">✦ नीचे स्क्रॉल करें ✦</div>
+  </div>
+</section>
+
+<div class="gold-strip"></div>
+
+<!-- CHAPTER 8 — ARDHKUWARI -->
+<section class="panel" id="panel-8" data-index="8">
+  <div class="panel-bg" style="background-image:url('https://images.unsplash.com/photo-1504701954957-2010ec3bcec1?w=1200&q=85'); background-position:center;"></div>
+  <div class="panel-overlay" style="background:linear-gradient(to top, rgba(13,6,0,0.98) 0%, rgba(13,6,0,0.7) 40%, rgba(0,0,0,0.4) 100%);"></div>
+  <div class="panel-texture"></div>
+  <div class="panel-frame"></div>
+  <div class="panel-content">
+    <span class="ch-tag">अध्याय ८</span>
+    <span class="ch-icon">🌑</span>
+    <div class="mandala-line">✦ गर्भ जून गुफा ✦</div>
+    <h2 class="ch-title">अर्धकुंवारी गुफा</h2>
+    <div class="ch-scroll">
+      <p class="story-text" data-text="माता एक संकरी पर्वत गुफा में प्रविष्ट हुईं — और वहाँ ९ महीनों तक गहन समाधि में बैठकर तपस्या की। यह गुफा माँ के गर्भ के समान पवित्र है — और आज अर्धकुंवारी गुफा के नाम से लाखों भक्तों की आस्था का केंद्र है।"></p>
+    </div>
+    <div class="scroll-cue">✦ नीचे स्क्रॉल करें ✦</div>
+  </div>
+</section>
+
+<div class="gold-strip"></div>
+
+<!-- CHAPTER 9 — BATTLE -->
+<section class="panel" id="panel-9" data-index="9">
+  <div class="panel-bg" style="background-image:url('https://images.unsplash.com/photo-1531685250784-7569952593d2?w=1200&q=85'); background-position:center;"></div>
+  <div class="panel-overlay" style="background:linear-gradient(to top, rgba(13,6,0,0.98) 0%, rgba(50,5,5,0.6) 45%, rgba(13,6,0,0.3) 100%);"></div>
+  <div class="panel-texture"></div>
+  <div class="panel-frame" style="background:linear-gradient(var(--dark),var(--dark)) padding-box, linear-gradient(135deg,rgba(139,26,26,0.5),transparent 40%,rgba(139,26,26,0.5)) border-box;"></div>
+  <div class="panel-content">
+    <span class="ch-tag" style="background:linear-gradient(135deg,#8b1a1a,#c0392b);">अध्याय ९</span>
+    <span class="ch-icon">⚔️</span>
+    <div class="mandala-line" style="color:#c0392b;">✦ अंतिम युद्ध ✦</div>
+    <h2 class="ch-title">माँ काली का उग्र रूप</h2>
+    <div class="ch-scroll" style="border-top-color:rgba(192,57,43,0.5);border-bottom-color:rgba(192,57,43,0.5);">
+      <p class="story-text" data-text="जब भैरवनाथ गुफा तक आ पहुँचा — तब माता ने माँ काली का भयंकर उग्र रूप धारण किया। प्रचंड शक्ति के साथ एक ही वार में उन्होंने भैरवनाथ का सिर धड़ से अलग कर दिया। उसका सिर दूर एक पहाड़ी पर जाकर गिरा — जहाँ आज भैरव मंदिर स्थित है।"></p>
+    </div>
+    <div class="scroll-cue">✦ नीचे स्क्रॉल करें ✦</div>
+  </div>
+</section>
+
+<div class="gold-strip"></div>
+
+<!-- CHAPTER 10 — MOKSHA -->
+<section class="panel" id="panel-10" data-index="10">
+  <div class="panel-bg" style="background-image:url('https://images.unsplash.com/photo-1542051841857-5f90071e7989?w=1200&q=85'); background-position:center;"></div>
+  <div class="panel-overlay" style="background:linear-gradient(to top, rgba(13,6,0,0.97) 0%, rgba(13,6,0,0.5) 50%, rgba(13,6,0,0.2) 100%);"></div>
+  <div class="panel-texture"></div>
+  <div class="panel-frame"></div>
+  <div class="panel-content">
+    <span class="ch-tag">अध्याय १०</span>
+    <span class="ch-icon">🙏</span>
+    <div class="mandala-line">✦ क्षमा और मोक्ष ✦</div>
+    <h2 class="ch-title">भैरवनाथ को मोक्ष</h2>
+    <div class="ch-scroll">
+      <p class="story-text" data-text="मृत्यु के क्षण में भैरवनाथ को अपनी भूल का पश्चाताप हुआ। उसने करुण मन से माता के चरणों में क्षमा माँगी। माता ने अपनी महान करुणा से उसे क्षमा कर दिया।"></p>
+      <div class="ch-quote">
+        "मेरे दर्शन तब तक पूर्ण नहीं होंगे — जब तक भक्त तुम्हारे मंदिर के भी दर्शन नहीं करेंगे।"
+        <span class="ch-quote-attr">— माता वैष्णो देवी</span>
+      </div>
+    </div>
+    <div class="scroll-cue">✦ नीचे स्क्रॉल करें ✦</div>
+  </div>
+</section>
+
+<div class="gold-strip"></div>
+
+<!-- CHAPTER 11 — THREE PINDIS -->
+<section class="panel" id="panel-11" data-index="11">
+  <div class="panel-bg" style="background-image:url('https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=1200&q=85'); background-position:center;filter:hue-rotate(20deg);"></div>
+  <div class="panel-overlay" style="background:linear-gradient(to top, rgba(13,6,0,0.98) 0%, rgba(13,6,0,0.6) 45%, rgba(13,6,0,0.25) 100%);"></div>
+  <div class="panel-texture"></div>
+  <div class="panel-frame"></div>
+  <div class="panel-content">
+    <span class="ch-tag">अध्याय ११</span>
+    <span class="ch-icon">🔱</span>
+    <div class="mandala-line">✦ परम दिव्य स्वरूप ✦</div>
+    <h2 class="ch-title">तीन पवित्र पिंडियाँ</h2>
+    <div class="ch-scroll">
+      <p class="story-text" data-text="इसके पश्चात माता ने गुफा में तीन प्राकृतिक पिंडियों का दिव्य स्वरूप धारण किया — यही उनका सर्वोच्च और अनादि रूप है।"></p>
+      <div class="pindis-grid">
+        <div class="pindi-card">
+          <span class="pindi-glow" style="color:#c0392b;">🔥</span>
+          <div class="pindi-name">महाकाली</div>
+          <div class="pindi-desc">शक्ति व साहस की देवी</div>
+        </div>
+        <div class="pindi-card">
+          <span class="pindi-glow" style="color:var(--gold);">🌸</span>
+          <div class="pindi-name">महालक्ष्मी</div>
+          <div class="pindi-desc">समृद्धि व वैभव की देवी</div>
+        </div>
+        <div class="pindi-card">
+          <span class="pindi-glow" style="color:#5dade2;">📖</span>
+          <div class="pindi-name">महासरस्वती</div>
+          <div class="pindi-desc">ज्ञान व विद्या की देवी</div>
+        </div>
+      </div>
+    </div>
+    <div class="scroll-cue">✦ नीचे स्क्रॉल करें ✦</div>
+  </div>
+</section>
+
+<div class="gold-strip"></div>
+
+<!-- FINALE -->
+<section class="panel" id="panel-finale" data-index="12" style="justify-content:center;align-items:center;text-align:center;">
+  <div class="panel-bg" style="background-image:url('https://images.unsplash.com/photo-1588416936097-41850ab3d86d?w=1200&q=85');filter:brightness(0.4) saturate(1.5);"></div>
+  <div class="panel-overlay" style="background:radial-gradient(ellipse at center, rgba(13,6,0,0.3) 0%, rgba(13,6,0,0.9) 100%);"></div>
+  <div class="panel-texture"></div>
+  <div class="panel-frame"></div>
+  <div class="panel-content" style="text-align:center;padding-bottom:3rem;">
+    <div class="hero-lotuses" style="font-size:2.5rem;">🌺 🌸 🌺</div>
+    <div class="finale-jai">जय माता दी</div>
+    <p class="finale-msg">
+      सच्ची भक्ति, श्रद्धा और धैर्य से माता हर भक्त की रक्षा करती हैं।<br>
+      <span style="color:var(--gold);font-size:0.85rem;">— त्रिकुटा पर्वत की अमर कथा</span>
+    </p>
+    <button class="restart-btn" onclick="scrollToPanel(0)">↑ कथा पुनः पढ़ें</button>
+  </div>
+</section>
+
+<script>
+// ════════════════════════════════
+// LOADER
+// ════════════════════════════════
+window.addEventListener('load', () => {
+  setTimeout(() => {
+    document.getElementById('loader').classList.add('hide');
+  }, 2600);
+});
+
+// ════════════════════════════════
+// PARTICLES
+// ════════════════════════════════
+const particleContainer = document.getElementById('particles');
+for (let i = 0; i < 25; i++) {
+  const s = document.createElement('div');
+  s.className = 'spark';
+  s.style.cssText = `
+    left:${Math.random()*100}%;
+    top:${Math.random()*100}%;
+    animation-duration:${6+Math.random()*10}s;
+    animation-delay:${Math.random()*8}s;
+    width:${2+Math.random()*3}px;
+    height:${2+Math.random()*3}px;
+    opacity:0;
+  `;
+  particleContainer.appendChild(s);
+}
+
+// ════════════════════════════════
+// PROGRESS DOTS
+// ════════════════════════════════
+const panels = document.querySelectorAll('.panel');
+const prog = document.getElementById('progress');
+panels.forEach((p, i) => {
+  const d = document.createElement('div');
+  d.className = 'pdot';
+  d.onclick = () => scrollToPanel(i);
+  prog.appendChild(d);
+});
+
+function scrollToPanel(i) {
+  panels[i]?.scrollIntoView({ behavior: 'smooth' });
+}
+
+// ════════════════════════════════
+// PARALLAX
+// ════════════════════════════════
+function doParallax() {
+  panels.forEach(panel => {
+    const bg = panel.querySelector('.panel-bg');
+    if (!bg) return;
+    const rect = panel.getBoundingClientRect();
+    const vh = window.innerHeight;
+    const pct = (vh - rect.top) / (vh + rect.height);
+    const shift = (pct - 0.5) * 18;
+    bg.style.transform = `translateY(${shift}%)`;
+  });
+}
+
+// ════════════════════════════════
+// INTERSECTION — animate text + dots
+// ════════════════════════════════
+const dots = document.querySelectorAll('.pdot');
+
+const io = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (!entry.isIntersecting) return;
+    const panel = entry.target;
+    const idx = parseInt(panel.dataset.index);
+
+    // update dots
+    dots.forEach((d, i) => d.classList.toggle('active', i === idx));
+
+    // animate story text
+    const textEl = panel.querySelector('.story-text');
+    if (textEl && !textEl.dataset.animated) {
+      textEl.dataset.animated = '1';
+      const raw = textEl.dataset.text || '';
+      textEl.innerHTML = '';
+      const words = raw.split(' ');
+      words.forEach((w, i) => {
+        const span = document.createElement('span');
+        span.className = 'word';
+        span.textContent = (i > 0 ? ' ' : '') + w;
+        textEl.appendChild(span);
+        setTimeout(() => span.classList.add('show'), 120 + i * 80);
+      });
+    }
+  });
+}, { threshold: 0.35 });
+
+panels.forEach(p => io.observe(p));
+
+// ════════════════════════════════
+// SCROLL handler
+// ════════════════════════════════
+let ticking = false;
+window.addEventListener('scroll', () => {
+  if (!ticking) {
+    requestAnimationFrame(() => { doParallax(); ticking = false; });
+    ticking = true;
+  }
+}, { passive: true });
+doParallax();
+
+// ════════════════════════════════
+// AUDIO — Web Audio API dhun
+// ════════════════════════════════
+let audioCtx = null;
+let audioOn = false;
+let nodes = [];
+
+function createDhun() {
+  if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+  nodes.forEach(n => { try { n.stop(); } catch(e){} });
+  nodes = [];
+
+  // Drone base Sa
+  const drone = audioCtx.createOscillator();
+  const droneGain = audioCtx.createGain();
+  drone.type = 'sine';
+  drone.frequency.value = 220;
+  droneGain.gain.value = 0.06;
+  drone.connect(droneGain);
+  droneGain.connect(audioCtx.destination);
+  drone.start();
+  nodes.push(drone);
+
+  // Harmonium-like melody — Bhairavi raga notes
+  const notes = [261.6, 293.6, 311.1, 349.2, 392, 415.3, 440, 466.1, 523.2];
+  const pattern = [0,2,3,4,5,4,3,2,0,1,2,3,4,5,6,5,4,3,2,1];
+  let t = audioCtx.currentTime + 0.5;
+  const totalDur = 12;
+
+  function scheduleNote(noteIdx, startTime, dur) {
+    const osc = audioCtx.createOscillator();
+    const g = audioCtx.createGain();
+    osc.type = 'triangle';
+    osc.frequency.value = notes[noteIdx % notes.length];
+    g.gain.setValueAtTime(0, startTime);
+    g.gain.linearRampToValueAtTime(0.12, startTime + 0.05);
+    g.gain.linearRampToValueAtTime(0.07, startTime + dur * 0.6);
+    g.gain.linearRampToValueAtTime(0, startTime + dur);
+    osc.connect(g);
+    g.connect(audioCtx.destination);
+    osc.start(startTime);
+    osc.stop(startTime + dur);
+    nodes.push(osc);
+  }
+
+  // Bell pings
+  function scheduleBell(freq, startTime) {
+    const osc = audioCtx.createOscillator();
+    const g = audioCtx.createGain();
+    osc.type = 'sine';
+    osc.frequency.value = freq;
+    g.gain.setValueAtTime(0.15, startTime);
+    g.gain.exponentialRampToValueAtTime(0.001, startTime + 2.5);
+    osc.connect(g);
+    g.connect(audioCtx.destination);
+    osc.start(startTime);
+    osc.stop(startTime + 2.5);
+    nodes.push(osc);
+  }
+
+  pattern.forEach((noteIdx, i) => {
+    scheduleNote(noteIdx, t + i * 0.55, 0.5);
+  });
+  scheduleBell(880, t + 0.1);
+  scheduleBell(1047, t + 6);
+  scheduleBell(880, t + 11);
+
+  // Loop
+  setTimeout(() => { if (audioOn) createDhun(); }, totalDur * 1000);
+}
+
+document.getElementById('audioBtn').addEventListener('click', () => {
+  audioOn = !audioOn;
+  document.getElementById('audioBtn').textContent = audioOn ? '🔕' : '🔔';
+  if (audioOn) {
+    createDhun();
+  } else {
+    nodes.forEach(n => { try { n.stop(); } catch(e){} });
+    nodes = [];
+  }
+});
+</script>
+</body>
+</html>
